@@ -7,6 +7,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var socketIO = require('socket.io');
 var appRoutes = require('./routes/app');
+var messageUtils = require('./utils/message');
 
 var port = process.env.PORT || 3000;
 var app = express();
@@ -18,8 +19,8 @@ var io = socketIO(server);
 io.on('connection', (socket) => {
     console.log('USer connected');
 
-    socket.emit('welcomeMessage', "Welcome to chat App.");
-    socket.broadcast.emit('NewUserMessage',"New User joined");
+    socket.emit('newMessage', messageUtils.generateMessage('Admin','Welcome to chat App'));
+    socket.broadcast.emit('newMessage',messageUtils.generateMessage('Admin','New User Joined'));
 
     socket.on('disconnect', ()=> {
         console.log('user Disconnedted');
@@ -33,11 +34,7 @@ io.on('connection', (socket) => {
     socket.on('createMessage', (message)=> {
         console.log('Create Message : ', message);
 
-        io.emit('newMessage', {
-            from : message.from,
-            text : message.text,
-            createdAt : new Date().getTime()
-        })
+        io.emit('newMessage', messageUtils.generateMessage(message.from,message.text));
 
         // socket.broadcast.emit('newMessage', {
         //     from : message.from,

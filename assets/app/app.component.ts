@@ -5,7 +5,7 @@ import io from "socket.io-client";
     selector: 'my-app',
     templateUrl: './app.component.html'
 })
-export class AppComponent implements OnInit {
+export class AppComponent{
     // url = 'http://localhost:3000/';
     // socket = io(this.url);
     // ngOnInit(){

@@ -31,11 +31,11 @@ io.on('connection', (socket) => {
     //     text : 'How are you ?'
     // });
 
-    socket.on('createMessage', (message)=> {
+    socket.on('createMessage', (message,callback)=> {
         console.log('Create Message : ', message);
 
         io.emit('newMessage', messageUtils.generateMessage(message.from,message.text));
-
+        callback();
         // socket.broadcast.emit('newMessage', {
         //     from : message.from,
         //     text : message.text,

@@ -24,15 +24,11 @@
         <div class="chat__footer">
             <form [formGroup]="myForm" (ngSubmit)="onSubmit()">
                 <div class="form-group">
-                    <input name="message" type="text" placeholder="Message" autofocus autocomplete="off" formControlName="message">
+                    <input name="message" type="text" placeholder="Message" autofocus autocomplete="off" style="width:930px" formControlName="message">
                     <button [disabled]="!myForm.valid">send</button>
                 </div>
             </form>    
-                <!-- <form id="message-form">
-                <input name="message" type="text" placeholder="Message" autofocus autocomplete="off">
-                <button>send</button>
-    
-            </form> -->
+            
                 <button id="send-location" (click) = sendLocation($event.target)>Send Location</button>
         </div>
 

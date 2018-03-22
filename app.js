@@ -8,6 +8,7 @@ var bodyParser = require('body-parser');
 var socketIO = require('socket.io');
 var appRoutes = require('./routes/app');
 var messageUtils = require('./utils/message');
+var {Users} = require('./utils/users');
 
 var port = process.env.PORT || 3000;
 var app = express();
@@ -15,15 +16,35 @@ var app = express();
 var server = http.createServer(app);
 
 var io = socketIO(server);
+var users = new Users();
 
 io.on('connection', (socket) => {
     console.log('USer connected');
 
-    socket.emit('newMessage', messageUtils.generateMessage('Admin','Welcome to chat App'));
-    socket.broadcast.emit('newMessage',messageUtils.generateMessage('Admin','New User Joined'));
+    
+    
+    //Chat room concept
+    socket.on('join',(params,callback)=>{
+        socket.join(params.room); 
+        users.removeUser(socket.id);
+        users.addUser(socket.id, params.user, params.room);
+
+        io.to(params.room).emit('updateUserList',users.getUserList(params.room));
+
+        socket.emit('newMessage', messageUtils.generateMessage('Admin',`Welcome ${params.user } to chat App`));
+        socket.broadcast.to(params.room).emit('newMessage',messageUtils.generateMessage('Admin',` ${params.user} has Joined`));
+        callback('done');
+
+    })
 
     socket.on('disconnect', ()=> {
         console.log('user Disconnedted');
+        var user = users.removeUser(socket.id);
+
+        if(user){
+            io.to(user.room).emit('updateUserList',users.getUserList(user.room));
+            io.to(user.room).emit('newMessage',messageUtils.generateMessage('Admin',` ${user.name} has Left`)); 
+        }
     });
 
     // socket.emit('newMessage', {

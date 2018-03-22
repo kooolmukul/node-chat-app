@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {ChatMessageService} from './chat/chat.service';
+import { ChatMessageService } from './chat/chat.service';
 
 @Component({
     selector: 'my-app',
@@ -9,6 +9,4 @@ import {ChatMessageService} from './chat/chat.service';
 })
 export class AppComponent{
 
-    
-    
 }

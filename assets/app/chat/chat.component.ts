@@ -1,5 +1,6 @@
 import { Component, OnInit, AfterViewChecked, ElementRef, ViewChild } from '@angular/core';
 import { FormGroup, FormControl, Validators } from "@angular/forms";
+import { ActivatedRoute } from '@angular/router';
 import * as io from "socket.io-client";
 import {ChatMessageService} from './chat.service';
 import {Message} from './chat.model';
@@ -12,12 +13,17 @@ import {Message} from './chat.model';
 export class ChatComponent implements OnInit{
     @ViewChild('scrollMe') private myScrollContainer: ElementRef;
 
+    room:string;
+    user:string;
+    private sub:any;
+
     myForm: FormGroup;
-    messages : Message[] = []; 
+    messages : Message[] = [];
+    users = []; 
     private socket: io.Socket;
     url = 'http://localhost:3000/';
     
-    constructor(private chatService : ChatMessageService){};
+    constructor(private chatService : ChatMessageService, private route: ActivatedRoute){};
 
     onSubmit(){
         this.socket.emit('createMessage', {
@@ -65,21 +71,45 @@ export class ChatComponent implements OnInit{
     } 
 
     ngOnInit(){
+
+        this.sub = this.route.params.subscribe(params => {
+            this.room = params['room'];
+            this.user = params['user'];
+            console.log(this.room,this.user);
+        });
+
         this.scrollToBottom();
+
         this.messages = this.chatService.getMessages();
+        
 
         this.myForm = new FormGroup({message :  new FormControl(null)});
+
+
         this.socket = io();
-         this.socket.on('connect', function() {
+
+        
+         this.socket.on('connect', ()=> {
              console.log('Connected to Server');
-         } );
+             this.socket.emit('join',{room : this.room, user: this.user},(data)=>{
+                this.users = this.chatService.getUserList();
+                console.log('users->',this.users);
+
+             })
+         });
+
 
          this.socket.on('disconnect', () => {
             console.log('Server Disconnected');
         });
 
+        this.socket.on('updateUserList',(userlist) =>{
+            
+            this.chatService.updateUserList(userlist);
+        });
         this.socket.on('newMessage', (message) =>{
             console.log('New Message', message);
+            this.users = this.chatService.getUserList();
             this.chatService.addMessage(message);
             
         });
@@ -88,6 +118,8 @@ export class ChatComponent implements OnInit{
         this.socket.on('newLocationMessage',  (message)=> {
             this.chatService.addMessage(message);
         });
+
+        
      }
     
     

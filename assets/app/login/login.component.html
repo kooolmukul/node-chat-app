@@ -1,0 +1,21 @@
+<div class="centered-form">
+        <div class="centered-form__form">
+            <form [formGroup]="myForm" (ngSubmit)="onSubmit()">
+                <div class="form-field">
+                    <h3>Join a Chat</h3>
+                </div>
+                <div class="form-field input-group">
+                    <label>Display Name</label>
+                    <input type="text" name="name" class="form-control" formControlName="name" autofocus>
+                </div>
+                <div class="form-field input-group">
+                    <label>Room Name</label>
+                    <input type="text" name="room" class="form-control" formControlName="room">
+                </div>
+                <div class="form-field ">
+                    <button>Join</button>
+                </div>
+            </form>
+    
+        </div>
+    </div>

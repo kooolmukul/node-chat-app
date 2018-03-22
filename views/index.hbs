@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <base href="/">
+    
     <title>Chat App</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7"
         crossorigin="anonymous">
@@ -10,35 +10,38 @@
 
 </head>
 
-<body class="chat">
-    {{!--
-    <my-app>Loading...</my-app> --}}
-    <div class="chat__sidebar">
-        <h3>People</h3>
-        <div id="users"></div>
-    </div>
+<body>
+    <my-app>Loading...</my-app> 
+</body>
+{{!-- <body class="centered-form">
+    
+    <my-app>Loading...</my-app> 
+    <div class="centered-form__form">
+        <form action="/chat.hbs">
+            <div class="form-field">
+                <h3>Join a Chat</h3>
+            </div>
+            <div class="form-field">
+                <labe>Display Name</label>
+                <input type="text" name="name" autofocus>
+            </div>
+            <div class="form-field">
+                <labe>Room Name</label>
+                <input type="text" name="room">
+            </div>
+            <div class="form-field">
+                <button>join</button>
+            </div>
+        </form>
 
-    <div class="chat__main">
-        <ol id="messages" class="chat__messages"></ol>
-
-        <div class="chat__footer">
-            <form id="message-form">
-                <input name="message" type="text" placeholder="Message" autofocus autocomplete="off">
-                <button>send</button>
-
-            </form>
-            <button id="send-location">Send Location</button>
-        </div>
-
-    </div>
-
+    </div> --}}
 
 
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
         crossorigin="anonymous"></script>
-    <script src="/socket.io/socket.io.js"></script> {{!--
-    <script src="/js/app/bundle.js"></script> --}}
-    <script src="/js/index.js"></script>
+    <script src="/socket.io/socket.io.js"></script> 
+    <script src="/js/app/bundle.js"></script>
+    {{!-- <script src="/js/index.js"></script> --}}
 
 </body>
 

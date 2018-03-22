@@ -1,0 +1,33 @@
+<div class="chat">
+    <div class="chat__sidebar">
+        <h3>People</h3>
+        <div id="users"></div>
+    </div>
+
+    <div class="chat__main" >
+        <ol id="messages" class="chat__messages" #scrollMe>
+            <li *ngFor = "let message of this.messages">
+                <b>{{message.from}} </b> <i style="font-size:1rem">{{message.createdAt}}</i>
+                <br>
+                <span *ngIf= "message.type == 'text'">{{message.text}}</span>
+                <a *ngIf= "message.type == 'location'" target="_blank" href={{message.text}}> My Current Location</a>
+            </li>
+        </ol>
+        
+        <div class="chat__footer">
+            <form [formGroup]="myForm" (ngSubmit)="onSubmit()">
+                <div class="form-group">
+                    <input name="message" type="text" placeholder="Message" autofocus autocomplete="off" formControlName="message">
+                    <button>send</button>
+                </div>
+            </form>    
+                <!-- <form id="message-form">
+                <input name="message" type="text" placeholder="Message" autofocus autocomplete="off">
+                <button>send</button>
+    
+            </form> -->
+                <button id="send-location" (click) = sendLocation($event.target)>Send Location</button>
+        </div>
+
+    </div>
+</div>

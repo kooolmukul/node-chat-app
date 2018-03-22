@@ -1,18 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import io from "socket.io-client";
+import {ChatMessageService} from './chat/chat.service';
 
 @Component({
     selector: 'my-app',
-    templateUrl: './app.component.html'
+    templateUrl: './app.component.html',
+    styleUrls: ['./app.component.css'],
+    providers: [ChatMessageService],
 })
 export class AppComponent{
-    // url = 'http://localhost:3000/';
-    // socket = io(this.url);
-    // ngOnInit(){
-    //     this.socket.on('connect', function() {
-    //         console.log('Connected to Server');
-    //     } );
-    // }
+
     
     
 }

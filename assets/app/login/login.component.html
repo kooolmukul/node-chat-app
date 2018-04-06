@@ -1,6 +1,40 @@
-<div class="centered-form">
-        <div class="centered-form__form">
+<div class="bg">
+    <img src="/back.jpg" id="bg" alt="">
+</div>
+<div class="container">
+    <div id="login-box">
+        <div class="logo">
+            <img src="http://lorempixel.com/output/people-q-c-100-100-1.jpg" class="img img-responsive img-circle center-block" />
+            <h1 class="logo-caption">
+                <span class="tweak">L</span>ogin</h1>
+        </div>
+        <!-- /.logo -->
+        <div class="controls">
             <form [formGroup]="myForm" (ngSubmit)="onSubmit()">
+                <input type="text" name="email" placeholder="Username" class="form-control" formControlName="email" autofocus />
+                <br>
+                <input type="password" name="password" placeholder="Password" class="form-control" formControlName="password" />
+                <button type="submit" class="btn btn-default btn-block btn-custom">Login</button>
+            </form>
+        </div>
+        <!-- /.controls -->
+    </div>
+    <!-- /#login-box -->
+</div>
+<!-- /.container -->
+
+
+
+
+
+
+
+
+
+
+<!-- <div class="centered-form">
+        <div class="centered-form__form">
+            <form [formGroup]="myForm" >
                 <div class="form-field">
                     <h3>Join a Chat</h3>
                 </div>
@@ -10,12 +44,12 @@
                 </div>
                 <div class="form-field input-group">
                     <label>Room Name</label>
-                    <input type="text" name="room" class="form-control" formControlName="room">
+                    <input type="text" name="room"  readonly class="form-control" formControlName="room">
                 </div>
                 <div class="form-field ">
-                    <button>Join</button>
+                    <button (click) = "signInWithGoogle()">Join</button>
                 </div>
             </form>
     
         </div>
-    </div>
+    </div> -->

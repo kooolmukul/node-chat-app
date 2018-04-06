@@ -1,11 +1,12 @@
 const moment = require('moment');
 
-var generateMessage = (from, text) => {
+var generateMessage = (from, text, socketId) => {
     return {
         from,
         text,
         createdAt : moment().format("h:mm a"),
-        type : 'text'
+        type : 'text',
+        socketId 
     }
 }
 

@@ -5,7 +5,7 @@ export class ChatMessageService {
     private users = ['a'];
 
     addMessage(msg){
-        const message = new Message(msg.from,msg.text,msg.createdAt,msg.type)
+        const message = new Message(msg.from,msg.text,msg.createdAt,msg.type,msg.socketId)
         this.messages.push(message)
     }
 

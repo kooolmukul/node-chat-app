@@ -1,27 +1,33 @@
-body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
-}
+  
+  @import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
 
-a {
-  color: #00B7FF;
-  cursor: pointer;
-}
+/*
+  body {
+    padding: 50px;
+    font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  }
 
-a:hover,
-a:active {
-  color: #00B7FF;
-  text-decoration: underline;
-}
+  a {
+    color: #00B7FF;
+    cursor: pointer;
+  }
 
-a.danger {
-  color: red;
-}
+  a:hover,
+  a:active {
+    color: #00B7FF;
+    text-decoration: underline;
+  }
 
-.spacing {
-  margin-bottom: 20px;
-}
+  a.danger {
+    color: red;
+  }
 
-input.ng-invalid.ng-touched {
-  border: 1px solid red;
-}
+  .spacing {
+    margin-bottom: 20px;
+  }
+
+  input.ng-invalid.ng-touched {
+    border: 1px solid red;
+  } */
+
+  

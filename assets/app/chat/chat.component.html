@@ -1,4 +1,168 @@
-<div class="chat">
+<!-- <div id="live-chat">
+        
+        <header class="clearfix">
+            
+            <a href="#" class="chat-close">x</a>
+
+            <h4>John Doe</h4>
+
+            <span class="chat-message-counter">3</span>
+
+        </header>
+
+        <div class="chat ">
+            
+            <div class="chat-history "  #scrollMe>
+                 -->
+<!-- <div class="chat-message clearfix" *ngFor = "let message of this.messages">
+                    
+                    <img src="http://garciniaslim.co.za/wp-content/uploads/2016/08/call.centre.worker.png" alt="" width="32" height="32">
+
+                    <div class="chat-message-content clearfix ">
+                        
+                        <span class="chat-time">{{message.createdAt}}</span>
+
+                        <h5>{{message.from}}</h5>
+
+                        <p *ngIf= "message.type == 'text'">{{message.text}}</p>
+                        <a *ngIf= "message.type == 'location'" target="_blank" href={{message.text}}> My Current Location</a>
+
+                    </div> 
+                    <hr style="margin-top:4px">
+                </div>  -->
+
+<button class="btn btn-danger" (click) = logout()> Logout</button>
+
+
+
+<div class="popup-box chat-popup popup-box-on" id="qnimate">
+
+    <div class="popup-head">
+        <div class="popup-head-left pull-left">
+            BakChod Villa</div>
+        <div class="popup-head-right pull-right">
+            <div class="btn-group">
+                <button class="chat-header-button" data-toggle="dropdown" type="button" aria-expanded="false">
+                    <i class="glyphicon glyphicon-cog"></i>
+                </button>
+                <ul role="menu" class="dropdown-menu pull-right">
+                    <li>
+                        <a href="#">Media</a>
+                    </li>
+                    <li>
+                        <a href="#">Block</a>
+                    </li>
+                    <li>
+                        <a href="#">Clear Chat</a>
+                    </li>
+                    <li>
+                        <a href="#">Email Chat</a>
+                    </li>
+                </ul>
+            </div>
+
+            <button data-widget="remove" id="removeClass" class="chat-header-button pull-right" type="button">
+                <i class="glyphicon glyphicon-off"></i>
+            </button>
+        </div>
+    </div>
+
+    <div class="popup-messages" #scrollMe id="style-1">
+        <div class="direct-chat-messages">
+
+            <div class="chat-box-single-line">
+                <abbr class="timestamp">October 8th, 2015</abbr>
+            </div>
+
+            <!-- Message. Default to the left -->
+            <div class="direct-chat-msg doted-border" *ngFor="let message of this.messages">
+                <div class="direct-chat-info clearfix">
+                    <span *ngIf="this.socket.id == message.socketId" [ngStyle]="{'float':'left'}" class="direct-chat-timestamp">{{message.createdAt}}</span>
+
+                    <span [ngStyle]="{'margin': this.socket.id == message.socketId ? '0px 0px 0 130px' : '0px 0px 0 49px'}" class="direct-chat-name pull-left">{{(this.socket.id == message.socketId) ? 'You' : message.from}}</span>
+                    <span *ngIf="this.socket.id !== message.socketId" [ngStyle]="{'float':'right'}" class="direct-chat-timestamp">{{message.createdAt}}</span>
+                </div>
+                <!-- /.direct-chat-info -->
+                <img [ngStyle]="{'float': this.socket.id == message.socketId ? 'right' : 'left' }" alt="message user image" src="http://bootsnipp.com/img/avatars/bcf1c0d13e5500875fdd5a7e8ad9752ee16e7462.jpg"
+                    class="direct-chat-img">
+                <!-- /.direct-chat-img -->
+                <div class="direct-chat-text" [ngStyle]="{'margin': this.socket.id == message.socketId ? '5px 50px 0 2px' : ''}">
+                    {{message.text}}
+                </div>
+
+                <div class="chat-box-single-line"></div>
+            </div>
+            <!-- /.direct-chat-msg -->
+
+        </div>
+
+    </div>
+    <div class="popup-messages-footer">
+
+        <form [formGroup]="myForm" (ngSubmit)="onSubmit()">
+            <input type="text" height="40px" name="message" placeholder="Message" autofocus autocomplete="off" formControlName="message"
+                placeholder="Type your message…">
+
+            <!-- <a class="btn btn-sm btn-primary" (click) = sendLocation($event.target)> <span class="glyphicon glyphicon-map-marker"></span></a> -->
+        </form>
+
+        <!-- <textarea id="status_message" placeholder="Type a message..." rows="10" cols="40" name="message"></textarea> -->
+        <div class="btn-footer">
+            <button class="bg_none">
+                <i class="glyphicon glyphicon-film"></i>
+            </button>
+            <button class="bg_none">
+                <i class="glyphicon glyphicon-camera"></i>
+            </button>
+            <button class="bg_none">
+                <i class="glyphicon glyphicon-paperclip"></i>
+            </button>
+            <button class="bg_none pull-right">
+                <i class="glyphicon glyphicon-thumbs-up"></i>
+            </button>
+        </div>
+    </div>
+
+</div>
+
+
+
+
+
+<!--
+            </div> <!-- end chat-history -->
+
+
+<!-- <p class="chat-feedback">Your partner is typing…</p>
+
+            <div class="chat__footer">
+            <form [formGroup]="myForm" (ngSubmit)="onSubmit()">
+                    
+                <fieldset>
+                    
+                    <input type="text" name="message" placeholder="Message" autofocus autocomplete="off"  formControlName="message" placeholder="Type your message…">
+                    
+                    <a class="btn btn-sm btn-primary" (click) = sendLocation($event.target)> <span class="glyphicon glyphicon-map-marker"></span></a>
+
+                </fieldset>
+                
+            </form>
+     
+        
+            
+        </div> -->
+
+<!--   </div>  end chat -
+
+    </div>  end live-chat -->
+
+
+<!-- -------------------------asasas---------------------------------------- -->
+
+
+
+
+<!-- <div class="chat">
     <div class="chat__sidebar">
         <h3 style="font-size:2rem">People</h3>
         <div id="users">
@@ -34,3 +198,4 @@
 
     </div>
 </div>
+ -->

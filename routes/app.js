@@ -5,8 +5,8 @@ router.get('/', function (req, res, next) {
     res.render('index');
 });
 
-router.get('/chat.hbs', function (req, res, next) {
-    res.render('chat');
-});
+// router.get('/chat.hbs', function (req, res, next) {
+//     res.render('chat');
+// });
 
 module.exports = router;

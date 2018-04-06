@@ -1,0 +1,20 @@
+.example-full-width {
+    width: 100%;
+  }
+  
+  .example-form {
+    min-width: 150px;
+    max-width: 550px;
+    width: 100%;
+  }
+
+
+  /* input, select, textarea {
+    color: white;
+    }  
+   */
+
+.mat-dailog-container {
+  background: #2d1d1de6;
+  color: rgba(246, 235, 235, 0.9);
+}

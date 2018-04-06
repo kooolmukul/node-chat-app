@@ -1,0 +1,84 @@
+<!------ Include the above in your HEAD tag ---------->
+
+<!-- Team -->
+<section id="team" class="pb-5">
+  <div class="container">
+    <button class="pull-right" style="float:right" mat-raised-button color="primary" (click)="openDialog()">+Add Task</button>
+    <h5 class="section-title h1">Tasks</h5>
+    <div class="row">
+      <!-- Team member -->
+      <div class="col-xs-12 col-sm-6 col-md-4" *ngFor="let task of tasks">
+        <div class="image-flip" ontouchstart="this.classList.toggle('hover');">
+          <div class="mainflip">
+            <div class="frontside">
+              <div class="card">
+                <div class="card-body text-center">
+                  <p>
+                    <img class=" img-fluid pull-left" src="https://sunlimetech.com/portfolio/boot4menu/assets/imgs/team/img_01.png" alt="card image">
+                  </p>
+                  <h4 class="card-title">{{task.taskName}}</h4>
+                  <!-- <p class="card-text">{{task.description}}</p> -->
+                  <!-- <a href="#" class="btn btn-primary btn-sm">
+                    <i class="fa fa-plus"></i>
+                  </a> -->
+                  <p>Count down timer Space.. TO DO</p>
+
+                  
+                    
+                      <mat-chip-list style="margin-top:10px;">
+                      
+                          <mat-chip color="primary" selected="true">{{ dateTimeformat(task.startTime).date + ', ' + dateTimeformat(task.startTime).time }}</mat-chip>
+                          &nbsp;
+                            <p>-</p>
+                            &nbsp;
+                          <mat-chip color="accent" selected="true"> {{ dateTimeformat(task.endTime).date + ', ' + dateTimeformat(task.endTime).time }}</mat-chip>
+                        </mat-chip-list>
+                  
+                  
+                    
+                    
+                </div>
+              </div>
+            </div>
+            <div class="backside">
+              <div class="card">
+                <div class="card-body text-center mt-4">
+                  <h4 class="card-title">Sunlimetech</h4>
+                  <p class="card-text">{{task.description}}</p>
+                  <ul class="list-inline">
+                    <li class="list-inline-item">
+                      <a class="social-icon text-xs-center" target="_blank" href="#">
+                        <i class="fa fa-facebook"></i>
+                      </a>
+                    </li>
+                    <li class="list-inline-item">
+                      <a class="social-icon text-xs-center" target="_blank" href="#">
+                        <i class="fa fa-twitter"></i>
+                      </a>
+                    </li>
+                    <li class="list-inline-item">
+                      <a class="social-icon text-xs-center" target="_blank" href="#">
+                        <i class="fa fa-skype"></i>
+                      </a>
+                    </li>
+                    <li class="list-inline-item">
+                      <a class="social-icon text-xs-center" target="_blank" href="#">
+                        <i class="fa fa-google"></i>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- ./Team member -->
+      <!-- Team member -->
+
+      <!-- ./Team member -->
+
+    </div>
+  </div>
+</section>
+<!-- Team -->

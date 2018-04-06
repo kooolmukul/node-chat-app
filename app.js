@@ -2,18 +2,26 @@ var express = require('express');
 var path = require('path');
 const http = require('http');
 var favicon = require('serve-favicon');
+const mongoose = require('mongoose');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var socketIO = require('socket.io');
 var appRoutes = require('./routes/app');
 var messageUtils = require('./utils/message');
-var {Users} = require('./utils/users');
+var {
+    Users
+} = require('./utils/users');
 
 var port = process.env.PORT || 3000;
 var app = express();
 
+var userRoutes = require('./routes/user');
+var taskRouter = require('./routes/task');
 var server = http.createServer(app);
+
+var connection = mongoose.connect('mongodb://localhost:27017/TaskApp');
+console.log('-->>' +connection );
 
 var io = socketIO(server);
 var users = new Users();
@@ -21,29 +29,29 @@ var users = new Users();
 io.on('connection', (socket) => {
     console.log('USer connected');
 
-    
-    
+
     //Chat room concept
-    socket.on('join',(params,callback)=>{
-        socket.join(params.room); 
+    socket.on('join', (params, callback) => {
+        socket.join(params.room);
         users.removeUser(socket.id);
         users.addUser(socket.id, params.user, params.room);
 
-        io.to(params.room).emit('updateUserList',users.getUserList(params.room));
+        io.to(params.room).emit('updateUserList', users.getUserList(params.room));
+        console.log(socket.id);
 
-        socket.emit('newMessage', messageUtils.generateMessage('Admin',`Welcome ${params.user } to chat App`));
-        socket.broadcast.to(params.room).emit('newMessage',messageUtils.generateMessage('Admin',` ${params.user} has Joined`));
+        socket.emit('newMessage', messageUtils.generateMessage('Admin', `Welcome ${params.user } to chat App`, socket.id));
+        socket.broadcast.to(params.room).emit('newMessage', messageUtils.generateMessage('Admin', ` ${params.user} has Joined`,socket.id));
         callback('done');
 
     })
 
-    socket.on('disconnect', ()=> {
+    socket.on('disconnect', () => {
         console.log('user Disconnedted');
         var user = users.removeUser(socket.id);
 
-        if(user){
-            io.to(user.room).emit('updateUserList',users.getUserList(user.room));
-            io.to(user.room).emit('newMessage',messageUtils.generateMessage('Admin',` ${user.name} has Left`)); 
+        if (user) {
+            io.to(user.room).emit('updateUserList', users.getUserList(user.room));
+            io.to(user.room).emit('newMessage', messageUtils.generateMessage('Admin', ` ${user.name} has Left`,socket.id));
         }
     });
 
@@ -52,21 +60,21 @@ io.on('connection', (socket) => {
     //     text : 'How are you ?'
     // });
 
-    socket.on('createMessage', (message,callback)=> {
+    socket.on('createMessage', (message, callback) => {
         // console.log('Create Message : ', message);
         var user = users.getUser(socket.id);
-        if(user){
-            io.to(user.room).emit('newMessage', messageUtils.generateMessage(user.name,message.text));
+        if (user) {
+            io.to(user.room).emit('newMessage', messageUtils.generateMessage(user.name, message.text,socket.id));
         }
 
-        
+
         callback('done');
     })
 
-    socket.on('createLocationMessage', (coords)=> {
+    socket.on('createLocationMessage', (coords) => {
         var user = users.getUser(socket.id);
-        if(user){
-            io.to(user.room).emit('newLocationMessage', messageUtils.generateLocationMessage(user.name,coords.latitude ,coords.longitude));
+        if (user) {
+            io.to(user.room).emit('newLocationMessage', messageUtils.generateLocationMessage(user.name, coords.latitude, coords.longitude));
 
         }
     })
@@ -83,7 +91,9 @@ app.set('view engine', 'hbs');
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.urlencoded({
+    extended: false
+}));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -94,6 +104,9 @@ app.use(function (req, res, next) {
     next();
 });
 
+
+app.use('/task',taskRouter);
+app.use('/user', userRoutes);
 app.use('/', appRoutes);
 
 // catch 404 and forward to error handler

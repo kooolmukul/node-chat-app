@@ -1,9 +1,12 @@
 import { Component, OnInit, AfterViewChecked, ElementRef, ViewChild } from '@angular/core';
 import { FormGroup, FormControl, Validators } from "@angular/forms";
-import { ActivatedRoute } from '@angular/router';
+
+import { ActivatedRoute, Router } from '@angular/router';
 import * as io from "socket.io-client";
 import { ChatMessageService } from './chat.service';
+import { AuthService } from '../login/login.service';
 import { Message } from './chat.model';
+import { User } from '../login/user.model';
 
 @Component({
     selector: 'app-chat',
@@ -15,6 +18,7 @@ export class ChatComponent implements OnInit {
 
     room: string;
     user: string;
+    currentUser : User;
     private sub: any;
 
     myForm: FormGroup;
@@ -22,35 +26,47 @@ export class ChatComponent implements OnInit {
     users = [];
     private socket: io.Socket;
     url = 'http://localhost:3000/';
+    panelOpenState: boolean = false;
 
-    constructor(private chatService: ChatMessageService, private route: ActivatedRoute) { };
+    constructor(private chatService: ChatMessageService, private route: ActivatedRoute, private router : Router,private authService: AuthService) {
+
+    };
+
+
+
 
     onSubmit() {
-        this.socket.emit('createMessage', {
-            text: this.myForm.value.message
-        }, (data) => {
-            this.myForm.reset();
-        });
-
+        if (this.myForm.valid) {
+            this.socket.emit('createMessage', {
+                text: this.myForm.value.message
+            }, (data) => {
+                this.myForm.reset();
+            });
+        }
     }
+
+
+    logout(){
+        this.authService.logoutUser();
+        this.router.navigateByUrl('/');
+    }
+
+    
 
     sendLocation(element) {
 
         if (!navigator.geolocation) {
             return alert('Geolocation not supported by Browser');
         }
-        element.textContent = 'Sending location...';
         element.disabled = true;
 
         navigator.geolocation.getCurrentPosition((position) => {
-            element.textContent = 'Send location';
             element.disabled = false;
             this.socket.emit('createLocationMessage', {
                 latitude: position.coords.latitude,
                 longitude: position.coords.longitude
             });
         }, () => {
-            element.textContent = 'Send location';
             element.disabled = false;
             alert('Unable to fetch Location');
         });
@@ -71,11 +87,15 @@ export class ChatComponent implements OnInit {
 
     ngOnInit() {
 
-        this.sub = this.route.params.subscribe(params => {
-            this.room = params['room'];
-            this.user = params['user'];
-            console.log(this.room, this.user);
-        });
+        this.currentUser =  this.authService.getUserInfo();
+        this.room  = 'backChodVilla';
+        this.user = this.currentUser.firstName;
+
+        // this.sub = this.route.params.subscribe(params => {
+        //     this.room = params['room'];
+        //     this.user = params['user'];
+        //     console.log(this.room, this.user);
+        // });
 
         this.scrollToBottom();
 
@@ -113,6 +133,7 @@ export class ChatComponent implements OnInit {
         });
         this.socket.on('newMessage', (message) => {
             console.log('New Message', message);
+            console.log(this.socket.id);
 
             this.chatService.addMessage(message);
 
